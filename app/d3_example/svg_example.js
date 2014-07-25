@@ -367,3 +367,9 @@ d3.select('.x.axis')
     return (width / 1.6) - margin;
   })
   .attr('y', margin / 1.5);
+
+  //Adding over labels
+  var graph = d3.select("#svg_example");
+  graph.selectAll("circle").on('mousover', function(d){
+    console.log(d);
+  });
