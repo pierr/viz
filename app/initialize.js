@@ -4,4 +4,5 @@ $(function(){
   require('./d3_example/paragraph_example');
   require('./d3_example/dataset_example');
   require('./d3_example/drawing_data');
+  require('./d3_example/svg_example');
 });

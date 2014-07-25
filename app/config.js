@@ -1,7 +1,6 @@
 module.exports = {
   svg:{
-    width: 500,
-    height: 50
+    width: 700,
+    height: 300
   }
-
-}
+};
