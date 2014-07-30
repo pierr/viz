@@ -1,0 +1,19 @@
+ .bar {
+      fill: #33b5e5;
+  }
+
+  .bar-project {
+    fill: #CC0000;
+  }
+
+  .bar-service {
+      fill: #669900;
+  }
+
+  .bar-job {
+    fill: #33b5e5;
+  }
+
+  .bar-none {
+      fill: #ffbb33;
+  }
