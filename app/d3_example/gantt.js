@@ -2,7 +2,7 @@
  * @author Dimitry Kudrayvtsev
  * @version 2.1
  */
-
+var config = require('../config');
 d3.gantt = function() {
     var FIT_TIME_DOMAIN_MODE = "fit";
     var FIXED_TIME_DOMAIN_MODE = "fixed";
@@ -18,8 +18,10 @@ d3.gantt = function() {
     var timeDomainMode = FIT_TIME_DOMAIN_MODE;// fixed or fit
     var taskTypes = [];
     var taskStatus = [];
-    var height = document.body.clientHeight - margin.top - margin.bottom-5;
-    var width = document.body.clientWidth - margin.right - margin.left-5;
+    var h = document.body.clientHeight < config.svg.height ? config.svg.height : document.body.clientHeight;
+    var w = document.body.clientWidth < config.svg.width ?config.svg.width :  document.body.clientWidth;
+    var height = h  - margin.top - margin.bottom-5;
+    var width = w - margin.right - margin.left-5;
 
     var tickFormat = "%H:%M";
 
