@@ -4,17 +4,17 @@
     var h = config.svg.height;
     var padding = 30;
 
-    /*
+    
       //Static dataset
-      var dataset = [
+/*      var dataset = [
               [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
               [410, 12], [475, 44], [25, 67], [85, 21], [220, 88],
               [600, 150]
-              ];
-      */
+              ];*/
+       var dataset = [[5,20],[25,67],[85,21],[100,33],[220,88],[250,50],[330,95],[410,12],[475,44],[480,90],[600,150]];
 
      //Dynamic, random dataset
-    var dataset = []; //Initialize empty array
+    /*var dataset = []; //Initialize empty array
     var numDataPoints = 50; //Number of dummy data points to create
     var xRange = Math.random() * 1000; //Max range of new x values
     var yRange = Math.random() * 1000; //Max range of new y values
@@ -22,7 +22,7 @@
       var newNumber1 = Math.floor(Math.random() * xRange); //New random integer
       var newNumber2 = Math.floor(Math.random() * yRange); //New random integer
       dataset.push([newNumber1, newNumber2]); //Add new number to array
-    }
+    }*/
 
      //Create scale functions
     var xScale = d3.scale.linear()
@@ -111,3 +111,7 @@
       .attr("class", "axis")
       .attr("transform", "translate(" + padding + ",0)")
       .call(yAxis);
+    
+    //Line between graphs.
+    var line = d3.svg.line().x(function(d){return xScale(d[0]);}).y(function(d){return yScale(d[1]);});
+    svg.append("path").attr('d', line(dataset)).attr("class","linePath");
