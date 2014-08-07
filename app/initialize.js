@@ -11,6 +11,8 @@ $(function(){
 	//Register d3 gantt plugin
 	require('./d3_example/gantt');
 	require('./d3_example/gantt_project');
+	require('./d3_example/graph');
+	require('./d3_example/stack');
 	
 	// var template = require('./templates/titre');
    //$('#titleContainer').html(template({title: "Bonjour"}));
