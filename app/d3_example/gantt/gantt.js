@@ -88,11 +88,28 @@ var Gantt = (function() {
   };
   Gantt.prototype.processAxis = function() {
     //Create a 
-    this.x = d3.time.scale().domain([timeDomainStart, timeDomainEnd]).range([0, width]).clamp(true);
-    this.y = d3.scale.ordinal().domain(taskTypes).rangeRoundBands([0, height - margin.top - margin.bottom], 0.1);
-    this.xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format(tickFormat)).tickSubdivide(true)
+    this.x = d3.time.scale().domain([this.timeDomainStart, this.timeDomainEnd]).range([0, this.width]).clamp(true);
+    this.y = d3.scale.ordinal().domain(taskTypes).rangeRoundBands([0, this.height - this.margin.top - this.margin.bottom], 0.1);
+    this.xAxis = d3.svg.axis().scale(this.x).orient("bottom").tickFormat(d3.time.format(this.tickFormat)).tickSubdivide(true)
       .tickSize(8).tickPadding(8);
-    this.yAxis = d3.svg.axis().scale(y).orient("left").tickSize(0);
+    this.yAxis = d3.svg.axis().scale(this.y).orient("left").tickSize(0);
+  };
+
+  /**
+   * Render the svg structure.
+   * @return {this}
+   */
+  Gantt.prototype.renderStructure =  function(){
+    return this.el.append("svg")
+                  .attr("class", "chart")
+                  .attr("width", this.width + this.margin.left + this.margin.right)
+                  .attr("height", this.height + this.margin.top + this.margin.bottom)
+                  .append("g")
+                  .attr("class", "gantt-chart")
+                  .attr("width", this.width + this.margin.left + this.margin.right)
+                  .attr("height", this.height + this.margin.top + this.margin.bottom)
+                  .attr("transform", "translate(" + this.margin.left + ", " + this.margin.top + ")");
+
   };
 
   /**
@@ -100,6 +117,8 @@ var Gantt = (function() {
    * @return {[type]} [description]
    */
   Gantt.prototype.render = function() {
+    //
+    this.renderStructure();
     return this;
   };
 
