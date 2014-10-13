@@ -1,2 +1,2 @@
-var template = require('../templates/test');
-$('body').html(template({nom: "pierre"}));
+var template = require('../templates/titre');
+$('body').html(template({title: "redline"}));
