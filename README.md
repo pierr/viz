@@ -15,3 +15,13 @@ d3SelectInEl: function (selector) {
         return d3.select($(selector, this.$el)[0]);
 }
 ```
+
+## logiciels à installer
+- http://www.inkscape.org/fr/telechargement/
+
+## liens
+http://handlebarsjs.com/
+https://github.com/KleeGroup/focus/wiki/installation
+https://developer.mozilla.org/fr/docs/Web/JavaScript
+http://brunch.io/
+http://nodejs.org/

@@ -9,11 +9,14 @@ $(function(){
 	//require('./d3_example/drawing_data');
 	//require('./d3_example/svg_example');
 	//Register d3 gantt plugin
-	require('./d3_example/gantt');
-	require('./d3_example/gantt_project');
+	//require('./d3_example/gantt');
+	//require('./d3_example/gantt_project');
 	//require('./d3_example/graph');
 	//require('./d3_example/stack');
 	//require('./grid/simple');
 	// var template = require('./templates/titre');
    //$('#titleContainer').html(template({title: "Bonjour"}));
+
+   //
+   require('./fliu_test/test');
 });

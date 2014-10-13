@@ -1,5 +1,5 @@
 exports.config =
-  sourceMaps: false
+  sourceMaps: true
   files:
     javascripts:
       joinTo:

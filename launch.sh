@@ -1,1 +1,1 @@
-brunch w -s
+brunch watch --server
