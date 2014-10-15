@@ -1,4 +1,4 @@
-viz
+[viz](https://github.com/pierr/viz/tree/test)
 ===
 A simple data vis example toolset using d3.js.
 
