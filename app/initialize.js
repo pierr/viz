@@ -20,5 +20,6 @@ $(function(){
    //require('./fliu_test/test');
    //require('./d3_example/loadCSV');
    //require('./fliu_test/svg_circle');
-   require('./fliu_test/bar_svg');
+   //require('./fliu_test/bar_svg');
+   require('./fliu_test/scale');
 });

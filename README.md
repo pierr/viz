@@ -25,3 +25,10 @@ https://github.com/KleeGroup/focus/wiki/installation
 https://developer.mozilla.org/fr/docs/Web/JavaScript
 http://brunch.io/
 http://nodejs.org/
+
+
+## commit dans git
+git add .
+git add app/config.coffee
+git commit -m 'Les message'
+git push origin test
