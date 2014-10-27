@@ -14,7 +14,9 @@ var data = require('../../app/component/data');
 var config = {
 	jobsData: data.jobs,
 	jobId_ok: 1417,
-	jobId_ko: 7878787
+	jobId_ko: 7878787,
+	serviceId_ok: 9536,
+	serviceId_ko: 11111
 };
 
 
@@ -22,7 +24,7 @@ var config = {
 describe('# Service Job ', function() {
 	//Test 1
 	describe('## getJobById', function() {
-		it('### Should return job wit th id ok', function() {
+		it('### Should return job with id ok', function() {
 			var job = serviceJob.getJobById(config.jobId_ok, config.jobsData);
 			expect(job).to.be.an('object');
 			expect(job).to.have.property('jobId');
@@ -44,3 +46,26 @@ describe('# Service Job ', function() {
 		});
 	});
 });
+
+
+describe('# Service services ', function() {
+	// Test 1
+	describe('## getServiceById', function(){
+		it('### Should return service with id ok ', function(){
+		var service = serviceJob.getServiceById(config.serviceId_ok, config.jobsData);
+		// Chai library
+		expect(service).to.be.an('object');
+		expect(service).to.have.property('jdtId');
+		});
+	});
+
+	//Test 2
+	/*describe('## getServiceById', function() {
+		it('### Should return nothing with no data', function() {
+			var service = serviceJob.getServiceById(config.serviceId_ok, null);
+			expect(service).to.be.an('undefined');
+		});
+	});*/
+
+});
+

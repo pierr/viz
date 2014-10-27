@@ -13,23 +13,40 @@ function getJobsByProjectId(projectId){
  * @return {object}       - Le JSON correspondant à un service.
  */
 function getJobById(jobId, jobsData) {
+	//if job Id is a number
 	if (!_.isNumber(jobId)) {
 		throw new Error("L'identifiant du job doit être un string", jobId);
 	}
+	// if jobsData is null or is not array
 	if (!jobsData || !_.isArray(jobsData)) {
 		return undefined;
 	}
+	// underscore method   http://underscorejs.org/ 
 	return _.findWhere(jobsData, {
 		jobId: jobId
 	});
-}
-
-
-function getServicesByJobId(jobId){
+	
 
 }
 
-function getServiceById(serviceId, jobData){
+
+/*function getServicesByJobId(jobId){
+	if(!_isNumber(jobId)){
+		throw new Error("L'identifiant du job doit être un string", jobId);
+	}
+
+
+}*/
+
+function getServiceById(serviceId, jobsData){
+	if(!_.isNumber(serviceId))
+	{
+		throw new Error("L'identifiant du job doit être un string", serviceId);
+	}
+	if(!jobsData || !_.isArray(jobsData)) {
+		return undefined;
+	}
+	return _.filter(jobsData[0].services, {jdtId: serviceId});
 
 }
 
