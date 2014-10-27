@@ -32,3 +32,14 @@ git add .
 git add app/config.coffee
 git commit -m 'Les message'
 git push origin test
+
+
+### Dépendances
+- Underscore https://www.npmjs.org/package/underscore
+- Mocha test unitaire http://mochajs.org/ et la syntaxe de test: http://chaijs.com/api/bdd/
+- Bower dependances des librairies côté navgateur http://bower.io/search/?q=d3, bower install --save nomDeLaLibrairie, exemple d3 `bower install --save d3`
+- Npm dépendance des librairies côté nodejs.   `npm install --save underscore`
+
+
+Debug 
+ npm install -g node-inspector

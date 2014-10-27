@@ -24,7 +24,8 @@
     "jquery": "~2.1.1",
     "bootstrap": "~3.2.0",
     "fontawesome": "~4.2.0",
-    "d3-tip": "~0.6.4"
+    "d3-tip": "~0.6.4",
+    "underscore": "~1.7.0"
   },
   "overrides": {
     "gridster": {
