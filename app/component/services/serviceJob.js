@@ -16,7 +16,7 @@ function getJobById(jobId, jobsData) {
 	//
 	//if job Id is a number
 	if (!_.isNumber(jobId)) {
-		throw new Error("L'identifiant du job doit être un string", jobId);
+		throw new Error("L'identifiant du job doit être un nombre", jobId);
 	}
 	// if jobsData is null or is not array
 	if (!jobsData || !_.isArray(jobsData)) {
@@ -31,16 +31,25 @@ function getJobById(jobId, jobsData) {
 }
 
 
-/*function getServicesByJobId(jobId){
-	if(!_isNumber(jobId)){
-		throw new Error("L'identifiant du job doit être un string", jobId);
+function getServicesByJobId(jobId, jobsData){
+	if(!_.isNumber(jobId)){
+		throw new Error("L'identifiant du job doit être un nombre", jobId);
+	}
+	if (!jobsData) {
+		return undefined;
+	}
+	var jobData = getJobById(jobId,jobsData);
+	if(jobData === undefined) {
+		return null;
+	}
+	else{
+	return jobData.services;
 	}
 
-
-}*/
+}
 
 function getServiceById(serviceId, jobData) {
-	if (!_.isNumber(serviceId)) {
+	if (!_.isNumber(serviceId)) {   // serviceId is not a number
 		throw new Error("L'identifiant du job doit être un nombre", serviceId);
 	}
 	if (!jobData || !_.isArray(jobData.services)) {
@@ -53,36 +62,32 @@ function getServiceById(serviceId, jobData) {
 }
 
 
-
-function getEquipementById(serviceId, jobData) {
-
-}
-
-
-function getPersonnesId(serviceId, jobData) {
-
-}
-
-
 function getDurationByJob(jobData) {
-
+	if(!jobData)
+	{
+		return undefined;
+	}
+	var duration = [jobData.startDate, jobData.endDate];
+	return duration;
 }
 
-function getNombreEquipementByJob(jobData) {
-
-}
 
 function getNombreServiceByJob(jobData) {
-
-}
-
-function getNombrePersonnesByJob(jobData) {
-
+	if(!jobData)
+	{
+		return undefined;
+	}
+	var serviceNum = jobData.services.length;
+	console.log(serviceNum);
+	return serviceNum;
 }
 
 
 
 module.exports = {
 	getJobById: getJobById,
-	getServiceById: getServiceById
+	getServiceById: getServiceById,
+	getServicesByJobId: getServicesByJobId,
+	getDurationByJob: getDurationByJob,
+	getNombreServiceByJob: getNombreServiceByJob
 };

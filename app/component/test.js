@@ -3,7 +3,7 @@ var data = require('./data');
 
 svc.getJobById(1417, data.jobs);
 
-
+/*
 var w = 960;
 var h = 540;
 
@@ -33,3 +33,4 @@ var chart = d3.select("body")
 var rect = chart.selectAll("rect")
 				.data(function(d) { return d3.time.months(new Date)})
 
+*/

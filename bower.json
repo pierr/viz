@@ -25,7 +25,8 @@
     "bootstrap": "~3.2.0",
     "fontawesome": "~4.2.0",
     "d3-tip": "~0.6.4",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "Faker": "~2.0.0"
   },
   "overrides": {
     "gridster": {
@@ -35,6 +36,14 @@
       "main": [
         "dist/jquery.gridster.js",
         "dist/jquery.gridster.css"
+      ]
+    },
+    "Faker": {
+      "dependencies": {
+        "jquery": "*"
+      },
+      "main": [
+        "build/build/faker.js"
       ]
     }
   }
