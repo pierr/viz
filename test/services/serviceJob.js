@@ -52,7 +52,8 @@ describe('# Service services ', function() {
 	// Test 1
 	describe('## getServiceById', function(){
 		it('### Should return service with id ok ', function(){
-		var service = serviceJob.getServiceById(config.serviceId_ok, config.jobsData);
+		var job = serviceJob.getJobById(config.jobId_ok, config.jobsData);
+		var service = serviceJob.getServiceById(config.serviceId_ok, job);
 		// Chai library
 		expect(service).to.be.an('object');
 		expect(service).to.have.property('jdtId');

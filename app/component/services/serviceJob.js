@@ -2,7 +2,7 @@
 
 
 
-function getJobsByProjectId(projectId){
+function getJobsByProjectId(projectId) {
 
 }
 
@@ -25,7 +25,7 @@ function getJobById(jobId, jobsData) {
 	return _.findWhere(jobsData, {
 		jobId: jobId
 	});
-	
+
 
 }
 
@@ -38,48 +38,50 @@ function getJobById(jobId, jobsData) {
 
 }*/
 
-function getServiceById(serviceId, jobsData){
-	if(!_.isNumber(serviceId))
-	{
-		throw new Error("L'identifiant du job doit être un string", serviceId);
+function getServiceById(serviceId, jobData) {
+	if (!_.isNumber(serviceId)) {
+		throw new Error("L'identifiant du job doit être un nombre", serviceId);
 	}
-	if(!jobsData || !_.isArray(jobsData)) {
+	if (!jobData || !_.isArray(jobData.services)) {
 		return undefined;
 	}
-	return _.filter(jobsData[0].services, {jdtId: serviceId});
+	return _.findWhere(jobData.services, {
+		jdtId: serviceId
+	});
 
 }
 
 
 
-
-function getEquipementById(serviceId, jobData){
-
-}
-
-
-function getPersonnesId(serviceId, jobData){
+function getEquipementById(serviceId, jobData) {
 
 }
 
 
-function getDurationByJob(jobData){
+function getPersonnesId(serviceId, jobData) {
 
 }
 
-function getNombreEquipementByJob(jobData){
+
+function getDurationByJob(jobData) {
 
 }
 
-function getNombreServiceByJob(jobData){
+function getNombreEquipementByJob(jobData) {
 
 }
-function getNombrePersonnesByJob(jobData){
+
+function getNombreServiceByJob(jobData) {
+
+}
+
+function getNombrePersonnesByJob(jobData) {
 
 }
 
 
 
 module.exports = {
-	getJobById: getJobById
+	getJobById: getJobById,
+	getServiceById: getServiceById
 };
