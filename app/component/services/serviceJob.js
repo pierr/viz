@@ -13,6 +13,7 @@ function getJobsByProjectId(projectId) {
  * @return {object}       - Le JSON correspondant à un service.
  */
 function getJobById(jobId, jobsData) {
+	//
 	//if job Id is a number
 	if (!_.isNumber(jobId)) {
 		throw new Error("L'identifiant du job doit être un string", jobId);
