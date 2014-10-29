@@ -1,7 +1,8 @@
-var svc = require('./services/serviceJob');
-var data = require('./data');
+//var svc = require('./services/serviceJob');
+var data = require('./mockData');
+var id = data.id;
 
-svc.getJobById(1417, data.jobs);
+
 
 /*
 var w = 960;

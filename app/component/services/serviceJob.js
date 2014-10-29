@@ -12,7 +12,7 @@ function getJobsByProjectId(projectId) {
  * @param {object} jobsData - Une liste de jobs.
  * @return {object}       - Le JSON correspondant à un service.
  */
-function getJobById(jobId, jobsData) {
+function getElementById(jobId, jobsData) {
 	//
 	//if job Id is a number
 	if (!_.isNumber(jobId)) {
@@ -24,14 +24,14 @@ function getJobById(jobId, jobsData) {
 	}
 	// underscore method   http://underscorejs.org/ 
 	return _.findWhere(jobsData, {
-		jobId: jobId
+		id: jobId
 	});
 
 
 }
 
 
-function getServicesByJobId(jobId, jobsData){
+function getTasksByElementId(jobId, jobsData){
 	if(!_.isNumber(jobId)){
 		throw new Error("L'identifiant du job doit être un nombre", jobId);
 	}
@@ -43,26 +43,26 @@ function getServicesByJobId(jobId, jobsData){
 		return null;
 	}
 	else{
-	return jobData.services;
+	return jobData.tasks;
 	}
 
 }
 
-function getServiceById(serviceId, jobData) {
+function getTaskById(serviceId, jobData) {
 	if (!_.isNumber(serviceId)) {   // serviceId is not a number
 		throw new Error("L'identifiant du job doit être un nombre", serviceId);
 	}
 	if (!jobData || !_.isArray(jobData.services)) {
 		return undefined;
 	}
-	return _.findWhere(jobData.services, {
-		jdtId: serviceId
+	return _.findWhere(jobData.tasks, {
+		id: serviceId
 	});
 
 }
 
 
-function getDurationByJob(jobData) {
+function getDurationByElement(jobData) {
 	if(!jobData)
 	{
 		return undefined;
@@ -72,22 +72,19 @@ function getDurationByJob(jobData) {
 }
 
 
-function getNombreServiceByJob(jobData) {
+function getTaskNumberByElement(jobData) {
 	if(!jobData)
 	{
 		return undefined;
 	}
-	var serviceNum = jobData.services.length;
-	console.log(serviceNum);
-	return serviceNum;
+	var taskNum = jobData.tasks.length;
+	return taskNum;
 }
 
-
-
 module.exports = {
-	getJobById: getJobById,
-	getServiceById: getServiceById,
-	getServicesByJobId: getServicesByJobId,
-	getDurationByJob: getDurationByJob,
-	getNombreServiceByJob: getNombreServiceByJob
+	getJobById: getElementById,
+	getServiceById: getTaskById,
+	getServicesByJobId: getTasksByElementId,
+	getDurationByJob: getDurationByElement,
+	getNombreServiceByJob: getTaskNumberByElement
 };

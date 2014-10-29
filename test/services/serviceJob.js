@@ -8,19 +8,22 @@ global._ = require('underscore');
 
 //Dépendances du tets.
 var serviceJob = require('../../app/component/services/serviceJob');
-var data = require('../../app/component/data');
+//var data = require('../../app/component/data');
+var generator = require('../../app/component/data/dataLoader');
+var element = generator.generate(5);
 
 //Configuration
 var config = {
-	jobsData: data.jobs,
-	jobId_ok: 1417,
+	jobData: element,
+	jobId_ok: element.id,
 	jobId_ko: 7878787,
 	serviceId_ok: 9536,
 	serviceId_ko: 11111
 };
 
 
-describe('# Service Job ', function() {
+
+/*describe('# Service Job ', function() {
 	//Test 1
 	describe('## getJobById', function() {
 		it('### Should return job with id ok', function() {
@@ -97,14 +100,13 @@ describe('# Service services ', function() {
 			expect(service).to.be.an('undefined');
 		});
 	});
-});
+});*/
 
 /////////////////////////////////////////
 describe('# Job duration', function(){
 	describe('## getDurationByJob', function(){
 		it('### Should return an array with start date and end date', function() {
-			var job = serviceJob.getJobById(config.jobId_ok, config.jobsData);
-			var duration = serviceJob.getDurationByJob(job);
+			var duration = serviceJob.getDurationByJob(config.jobData);
 			expect(duration).to.be.an('array');
 			expect(duration).to.have.length(2);
 		});
@@ -118,7 +120,7 @@ describe('# Job duration', function(){
 });
 
 //////////////////////////////////////////
-describe('# Service Number', function(){
+/*describe('# Service Number', function(){
 	describe('## getNombreServiceByJob', function(){
 		it('### Should return an integer representing the number of services', function(){
 		var job = serviceJob.getJobById(config.jobId_ok, config.jobsData);
@@ -132,7 +134,7 @@ describe('# Service Number', function(){
 			expect(serviceNumbre).to.be.an('undefined');
 		});
 	});
-});
+});*/
 
 
 

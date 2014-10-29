@@ -23,6 +23,7 @@ $(function(){
    //require('./fliu_test/bar_svg');
    //require('./fliu_test/scale');
    //require('./fliu_test/update');
-   require('./component/test');
+   require('./component/services/echelle');
+
 
 });
