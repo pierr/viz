@@ -31,14 +31,30 @@ function getElementById(jobId, jobsData) {
 }
 
 
-function getTasksByElementId(jobId, jobsData){
+/*function getTasksByElementId(jobId, jobsData){
 	if(!_.isNumber(jobId)){
 		throw new Error("L'identifiant du job doit être un nombre", jobId);
 	}
 	if (!jobsData) {
 		return undefined;
 	}
-	var jobData = getJobById(jobId,jobsData);
+	var jobData = getElementById(jobId,jobsData);
+	if(jobData === undefined) {
+		return null;
+	}
+	else{
+	return jobData.tasks;
+	}
+
+}*/
+
+function getTasksByElementId(jobId, jobData){
+	if(!_.isNumber(jobId)){
+		throw new Error("L'identifiant du job doit être un nombre", jobId);
+	}
+	if (!jobData) {
+		return undefined;
+	}
 	if(jobData === undefined) {
 		return null;
 	}
@@ -67,8 +83,7 @@ function getDurationByElement(jobData) {
 	{
 		return undefined;
 	}
-	var duration = [jobData.startDate, jobData.endDate];
-	return duration;
+	return {startDate: jobData.startDate, endDate: jobData.endDate};
 }
 
 

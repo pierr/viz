@@ -34,6 +34,7 @@ function generateElement(nbTasks) {
 	};
 }
 
+
 module.exports = {
 	generate: generateElement,
 };

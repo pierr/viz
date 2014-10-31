@@ -1,0 +1,19 @@
+function getMonthScale(startDate, endDate){
+	var firstMonthDay = new Date(startDate.getFullYear(), startDate.getMonth(),1);
+	var numMonth;
+
+	// ici ajouter lastMonthDay
+	if(firstMonthDay.getTime()!=startDate.getTime())
+	{
+		numMonth = d3.time.months(firstMonthDay,endDate,1);
+	}
+	else
+	{
+		numMonth= d3.time.months(startDate,endDate,1);
+	}
+	console.log(numMonth[0],numMonth[numMonth.length-1]);
+	return numMonth;
+}
+module.exports = {
+	getMonthScale: getMonthScale
+};
