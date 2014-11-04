@@ -1,30 +1,29 @@
-
 var config = require('../config');
+var margin = config.margin;
+
 
 function taskScale(taskItem) {
-	var yDomain =[];
-	taskItem.forEach(function (event) {
+	var yDomain = [];
+	taskItem.forEach(function(event) {
 		yDomain.push(event.name);
-		//yRange.push( config.svg.height - 20 - (index) * 80);
 	});
+
 	var yTaskScale = d3.scale.ordinal()
 		.domain(yDomain)
-		.rangeRoundBands([0,config.svg.height - config.margin.top - config.margin.bottom],0.1);
+		.rangeRoundBands([0, config.svg.height - margin.top - margin.bottom], 0.1);
 	return yTaskScale;
 }
 
-function buildTaskAxis(taskScale)
-{
+function buildTaskAxis(taskScale) {
 	var taskAxis = d3.svg.axis()
-					.scale(taskScale)
-					.tickSize(-(config.svg.width - config.margin.left - config.margin.right))
-					.orient('left');
+		.scale(taskScale) //echelle.
+		.tickSize(-(config.svg.width - config.margin.left - margin.right)) //Largeur de la ligne des abscisses.
+		.orient('left');
 	return taskAxis;
 
 }
 
-module.exports={
+module.exports = {
 	taskScale: taskScale,
 	taskAxis: buildTaskAxis
 };
-

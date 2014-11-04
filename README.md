@@ -15,6 +15,9 @@ d3SelectInEl: function (selector) {
         return d3.select($(selector, this.$el)[0]);
 }
 ```
+### Documentation du code
+Au dessus d'un objet / fonction js faire
+/***/ puis se placer après la deuxième étoile et faire entrer.
 
 ## logiciels à installer
 - http://www.inkscape.org/fr/telechargement/

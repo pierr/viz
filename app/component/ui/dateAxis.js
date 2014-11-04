@@ -5,7 +5,7 @@ var h = 540;*/
 
 // génération des données.
 //Dépendances
-var config = require('../config');
+
 /*function dateScale(numMonth) {
 	var xDateScale = d3.time.scale()
 		.domain([numMonth[0], numMonth[numMonth.length - 1]])
@@ -30,6 +30,18 @@ function buildDateAxis(numMonth)
 
 ////////////////////////////////////////////nouveau scale
 
+//Deopendencies
+/**
+ * Component configuration.
+ * @type {object}
+ */
+var config = require('../config');
+
+/**
+ * Process the date
+ * @param  {object} dateUtil - This object contains two properties firstMonthDay and nextMonthDay.
+ * @return {object} Return a d3.js scale from the fristMonth and the newxMonth dates.
+ */
 function dateScale(dateUtil) {
 	var xDateScale = d3.time.scale()
 		.domain([dateUtil.firstMonthDay, dateUtil.nextMonthDay])
@@ -37,19 +49,35 @@ function dateScale(dateUtil) {
 	return xDateScale;
 }
 
-function buildDateAxis(dateScale)
-{
+function getFormat() {
+	return '%y-%b';
+}
+
+/**
+ * [buildDateAxis description]
+ * @param  {[type]} dateScale [description]
+ * @return {[type]}           [description]
+ */
+function buildDateAxis(dateScale, options) {
+	options = options || {
+		orientation: 'top'
+	};
+	var tickSizeValue = config.svg.height - config.margin.top - config.margin.bottom;
 	var xAxis = d3.svg.axis()
-					.scale(dateScale)
-					.orient('top')
-					.ticks(d3.time.months,1)
-					.tickFormat(d3.time.format('%y-%b'))
-					.tickSize(-(config.svg.height - config.margin.top - config.margin.bottom))
-					.tickPadding(10);
+		.scale(dateScale)
+		.orient(options.orientation)
+		.ticks(d3.time.months, 1)
+		.tickFormat(d3.time.format(getFormat()))
+		.tickSize(-tickSizeValue) //Minus in order to draw from top to bottom.
+		.tickPadding(10);
 	return xAxis;
 
 }
 
+/**
+ * Fonctions exposées par le module.
+ * @type {Object}
+ */
 module.exports = {
 	dateScale: dateScale,
 	dateAxis: buildDateAxis
