@@ -1,16 +1,22 @@
-function generateTask(elementId) {
+function generateTask(elementId,startDate,endDate) {
+
+	var tStartDate = faker.date.between(startDate,endDate);
+	var tEndDate = faker.date.between(tStartDate, endDate);
+
 	return {
 		parentId: elementId,
 		id: faker.random.number(),
 		name: faker.name.lastName(),
-		label: faker.company.companyName()
+		label: faker.company.companyName(),
+		tStartDate: tStartDate,
+		tEndDate: tEndDate
 	};
 }
 
-function getTasks(elementId, nb) {
+function getTasks(elementId, nb, startDate, endDate) {
 	var tasks = [];
 	for (var i = 0; i < nb; i++) {
-		tasks.push(generateTask(elementId));
+		tasks.push(generateTask(elementId,startDate,endDate));
 	}
 	return tasks;
 }
@@ -30,7 +36,7 @@ function generateElement(nbTasks) {
 		label: label,
 		startDate: startDate,
 		endDate: endDate,
-		tasks: getTasks(elementId, nbTasks)
+		tasks: getTasks(elementId, nbTasks, startDate,endDate)
 	};
 }
 

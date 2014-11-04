@@ -6,10 +6,34 @@ var h = 540;*/
 // génération des données.
 //Dépendances
 var config = require('../config');
-function dateScale(numMonth) {
+/*function dateScale(numMonth) {
 	var xDateScale = d3.time.scale()
 		.domain([numMonth[0], numMonth[numMonth.length - 1]])
 		.range([0, config.svg.width]);
+	return xDateScale;
+}
+
+function buildDateAxis(numMonth)
+{
+	var xScale = dateScale(numMonth);   // attention. le nom de variable doit être différent avec celle de function.
+	var xAxis = d3.svg.axis()
+					.scale(xScale)
+					.orient('top')
+					.ticks(d3.time.months,1)
+					.tickFormat(d3.time.format('%y-%b'))
+					.tickSize(2)
+					.tickPadding(10);
+	return xAxis;
+
+}*/
+
+
+////////////////////////////////////////////nouveau scale
+
+function dateScale(dateUtil) {
+	var xDateScale = d3.time.scale()
+		.domain([dateUtil.firstMonthDay, dateUtil.nextMonthDay])
+		.rangeRound([0, config.svg.width - config.margin.left - config.margin.right]);
 	return xDateScale;
 }
 
@@ -19,13 +43,14 @@ function buildDateAxis(dateScale)
 					.scale(dateScale)
 					.orient('top')
 					.ticks(d3.time.months,1)
-					.tickFormat(d3.time.format('%y %b'))
-					.tickSize(0);
+					.tickFormat(d3.time.format('%y-%b'))
+					.tickSize(-(config.svg.height - config.margin.top - config.margin.bottom))
+					.tickPadding(10);
 	return xAxis;
 
 }
 
 module.exports = {
 	dateScale: dateScale,
-	buildDateAxis: buildDateAxis
+	dateAxis: buildDateAxis
 };

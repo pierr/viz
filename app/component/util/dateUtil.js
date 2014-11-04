@@ -1,4 +1,4 @@
-function getMonthScale(startDate, endDate){
+/*function getMonthScale(startDate, endDate){
 	var firstMonthDay = new Date(startDate.getFullYear(), startDate.getMonth(),1);
 	var numMonth;
 
@@ -16,4 +16,20 @@ function getMonthScale(startDate, endDate){
 }
 module.exports = {
 	getMonthScale: getMonthScale
+};*/
+
+
+// calculer le premier jour du mois pour la date début, et le prochain mois pour la date de fin.
+function getDateScale(startDate, endDate)
+{
+	var firstMonthDay = new Date(startDate.getFullYear(), startDate.getMonth(),1);
+	var nextMonthDay = d3.time.month.offset(endDate,1);
+	return {
+		firstMonthDay: firstMonthDay,
+		nextMonthDay: nextMonthDay
+	};
+}
+
+module.exports = {
+	getMonthScale: getDateScale
 };
