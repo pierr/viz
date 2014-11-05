@@ -3,12 +3,12 @@ var chai = require('chai');
 global.chai = chai;
 global.expect = chai.expect;
 global._ = require('underscore');
-
+global.faker = require('faker');
 //Exécution des tests.
 
 //Dépendances du tets.
 var serviceJob = require('../../app/component/services/serviceJob');
-//var data = require('../../app/component/data');
+
 var generator = require('../../app/component/data/dataLoader');
 var element = generator.generate(5);
 

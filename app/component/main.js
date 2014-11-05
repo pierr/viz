@@ -72,7 +72,21 @@ var bars = gantt.append("g")
         return (dateScale(d.tEndDate) - dateScale(d.tStartDate));
     })
     .attr("height", taskScale.rangeBand()*0.9)
-    .attr("fill", "orange");
+    .attr("fill", "orange")
+    .on("mouseover", function(d){
+        var xPosition = parseFloat(d3.select(this).attr("x"));
+        var yPosition = parseFloat(d3.select(this).attr("y")) + taskScale.rangeBand *0.3;
+        d3.select('#tooltip')
+        .style("left",xPosition +"px")
+        .style("top",yPosition+"px")
+        .select('#value')
+        .text(
+                    d.id
+                    /*"name:" +d.name,
+                    "start date :" +d.tStartDate,
+                    "end Date:" + d.tEndDate*/
+                    );
+            });
 
 var taskName = [taskItem[0].name, taskItem[1].name,taskItem[2].name,taskItem[3].name,taskItem[4].name];
 var lines = gantt.append('g')
@@ -100,34 +114,21 @@ var texts = gantt.append("g")
                 .attr("text-anchor", "end")
                 .attr("fill","black");
 
-d3.select('button[data-action="reload"]').on('click', function(event) {
-    gantt.selectAll("rect").data(gen.generate(5).tasks)
-        .attr("x", function(d) {
-            return dateScale(d.tStartDate);
-        })
-        .attr("y", function(d) {
-            return taskScale(d.name);
-        })
-        .attr("width", function(d) {
-            return (dateScale(d.tEndDate) - dateScale(d.tStartDate));
-        })
-        .attr("height", 118)
-        .attr("fill", "orange");
-});
 
 var services = require('./services/shiftDate');
 d3.select('button[data-action="shift"]').on('click', function(event) {
-    var data = services.shiftDate(element, 5);
-    gantt.selectAll("rect").data(data)
+    // advance or pushed back 5 days
+    var newElement = services.shiftDate(element, 5);
+    gantt.selectAll("rect").data(newElement.tasks)
         .attr("x", function(d) {
             return dateScale(d.tStartDate);
         })
         .attr("y", function(d) {
-            return taskScale(d.name);
+            return taskScale(d.name) + 0.05* taskScale.rangeBand();
         })
         .attr("width", function(d) {
             return (dateScale(d.tEndDate) - dateScale(d.tStartDate));
         })
-        .attr("height", 118)
+        .attr("height", taskScale.rangeBand()*0.9)
         .attr("fill", "orange");
 });
