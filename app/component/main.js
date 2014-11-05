@@ -74,19 +74,26 @@ var bars = gantt.append("g")
     .attr("height", taskScale.rangeBand()*0.9)
     .attr("fill", "orange")
     .on("mouseover", function(d){
-        var xPosition = parseFloat(d3.select(this).attr("x"));
-        var yPosition = parseFloat(d3.select(this).attr("y")) + taskScale.rangeBand *0.3;
+        var xPosition = dateScale(d.tEndDate);
+        var yPosition = parseFloat(d3.select(this).attr("y")) + taskScale.rangeBand();
         d3.select('#tooltip')
         .style("left",xPosition +"px")
         .style("top",yPosition+"px")
         .select('#value')
-        .text(
-                    d.id
-                    /*"name:" +d.name,
-                    "start date :" +d.tStartDate,
-                    "end Date:" + d.tEndDate*/
+        .html(
+                    "id: "+d.id+"<br/>"+
+                    "name:" +d.name+"<br/>"+
+                    "start date: " +d.tStartDate+"</br>"+
+                    "end date: "+d.tEndDate
                     );
-            });
+
+        //show the tool tip
+        d3.select('#tooltip').classed("hidden",false);
+            })
+    .on("mouthout",function(){
+        //hide the tooltip
+        d3.select('#tooltip').classed("hidden",true);
+    });
 
 var taskName = [taskItem[0].name, taskItem[1].name,taskItem[2].name,taskItem[3].name,taskItem[4].name];
 var lines = gantt.append('g')
