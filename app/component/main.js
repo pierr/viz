@@ -3,15 +3,20 @@ var config = require('./config');
 // calcule du premier jour de la date début et le prochain mois de la date de fin
 var dateUtil = require('./util/dateUtil');
 // générer les données
-var gen = require('./data/dataLoader');
-var element = gen.generate(5);
+//var gen = require('./data/dataLoader');
+//var element = gen.generate(5);
 
+//load the static data
+var element = require('./data/dataLoaderStatic');
 //appeler la méthod pour calcule de la durée.
 var serviceJob = require('./services/serviceJob');
 var jobTime = serviceJob.getDurationByJob(element);
 
+
 // on va obtenir deux dates
 var dateUtil = dateUtil.getMonthScale(jobTime.startDate, jobTime.endDate);
+console.log(dateUtil.firstMonthDay);
+console.log(dateUtil.nextMonthDay);
 
 // on va obtenir un tableau de toutes les tâches d'un élément.
 var taskItem = serviceJob.getServicesByJobId(element.id, element);
@@ -60,12 +65,12 @@ var bars = gantt.append("g")
         return dateScale(d.tStartDate);
     })
     .attr("y", function(d) {
-        return taskScale(d.name);
+        return taskScale(d.name) + 0.05 * taskScale.rangeBand();
     })
     .attr("width", function(d) {
         return (dateScale(d.tEndDate) - dateScale(d.tStartDate));
     })
-    .attr("height", 118)
+    .attr("height", taskScale.rangeBand()*0.9)
     .attr("fill", "orange");
 
 var taskName = [taskItem[0].name, taskItem[1].name,taskItem[2].name,taskItem[3].name,taskItem[4].name];
@@ -77,9 +82,9 @@ var lines = gantt.append('g')
                 .append('line')
                 .attr('x1', 0)
                 .attr('x2', config.svg.width-config.margin.right)
-                .attr("y1", function(d){return taskScale(d);})
-                .attr("y2", function(d){return taskScale(d);})
-                .attr("stroke-width",2)
+                .attr("y1", function(d){return taskScale(d)+taskScale.rangeBand();})
+                .attr("y2", function(d){return taskScale(d)+taskScale.rangeBand();})
+                .attr("stroke-width",1)
                 .attr("stroke","black");
 var texts = gantt.append("g")
                 .attr("class", "label")
@@ -88,8 +93,10 @@ var texts = gantt.append("g")
                 .enter()
                 .append("text")
                 .text(function(d){return d.name ;})
-                .attr("x", -35)
-                .attr("y", function(d,i){return i*172;})
+                .attr("x", -0.05*config.margin.left)
+                .attr("y", function(d,i){return (i * taskScale.rangeBand() + 0.9 * taskScale.rangeBand());})   // the y location for the label is the width of the bands + offset
+                .attr("font-size", "15px")
+                .attr("text-anchor", "end")
                 .attr("fill","black");
 
 d3.select('button[data-action="reload"]').on('click', function(event) {

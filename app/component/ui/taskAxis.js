@@ -11,10 +11,7 @@ function taskScale(taskItem) {
 	var yTaskScale = d3.scale.ordinal()
 		.domain(yDomain)
 		.rangeBands([0, config.svg.height - margin.top - margin.bottom]); //La hauteur en pixel est
-		for(var i = 0; i< yDomain.length; i++)
-		{
-		console.log("test "+ yTaskScale(yDomain[i]));
-		}
+		console.log("test:"+yTaskScale.rangeBand());
 	return yTaskScale;
 
 }
