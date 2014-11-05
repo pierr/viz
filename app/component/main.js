@@ -20,6 +20,7 @@ console.log(dateUtil.nextMonthDay);
 
 // on va obtenir un tableau de toutes les tâches d'un élément.
 var taskItem = serviceJob.getServicesByJobId(element.id, element);
+console.log("taskItem length : "+taskItem.length);
 
 // date Scale
 var dateAxisBuilder = require('./ui/dateAxis');
@@ -114,8 +115,9 @@ d3.select('button[data-action="reload"]').on('click', function(event) {
         .attr("fill", "orange");
 });
 
+var services = require('./services/shiftDate');
 d3.select('button[data-action="shift"]').on('click', function(event) {
-    var data = service.shiftOneWeek(taskItem);
+    var data = services.shiftDate(element, 5);
     gantt.selectAll("rect").data(data)
         .attr("x", function(d) {
             return dateScale(d.tStartDate);
