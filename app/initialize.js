@@ -24,6 +24,6 @@ $(function(){
    //require('./fliu_test/scale');
    //require('./fliu_test/update');
    require('./component/main');
-
+	//require('./component/data/dataLoaderServer');	
 
 });

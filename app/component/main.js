@@ -6,11 +6,19 @@ var dateUtil = require('./util/dateUtil');
 //var gen = require('./data/dataLoader');
 //var element = gen.generate(5);
 
+/*
 //load the static data
 var element = require('./data/dataLoaderStatic');
+*/
+
+// load the server data
+var dataLoaderServer = require('./data/dataLoaderServer');
+var element = dataLoaderServer.dataRequest();
 //appeler la méthod pour calcule de la durée.
 var serviceJob = require('./services/serviceJob');
 var jobTime = serviceJob.getDurationByJob(element);
+console.log("start date:" + jobTime.startDate);
+console.log("end date: " + jobTime.endDate);
 
 
 // on va obtenir deux dates
