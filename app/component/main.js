@@ -90,7 +90,7 @@ var bars = gantt.append("g")
         //show the tool tip
         d3.select('#tooltip').classed("hidden",false);
             })
-    .on("mouthout",function(){
+    .on("mouseout",function(){
         //hide the tooltip
         d3.select('#tooltip').classed("hidden",true);
     });
