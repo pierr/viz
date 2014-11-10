@@ -11,24 +11,21 @@ var dateUtil = require('./util/dateUtil');
 var element = require('./data/dataLoaderStatic');
 */
 
-// load the server data
+
+// load the server data; Here there is a little problem: the start and end date is type of "string", not "date".
 var dataLoaderServer = require('./data/dataLoaderServer');
 var element = dataLoaderServer.dataRequest();
-//appeler la méthod pour calcule de la durée.
+var change = require('./util/changeSToD');
+
+//call the function "getDurationByJob" to get the date value of the job
 var serviceJob = require('./services/serviceJob');
 var jobTime = serviceJob.getDurationByJob(element);
-console.log("start date:" + jobTime.startDate);
-console.log("end date: " + jobTime.endDate);
 
-
-// on va obtenir deux dates
+// after calling the dateUtil method, we will get two dates: the first day of the auctual start month, and the next month day of the end date.
 var dateUtil = dateUtil.getMonthScale(jobTime.startDate, jobTime.endDate);
-console.log(dateUtil.firstMonthDay);
-console.log(dateUtil.nextMonthDay);
 
 // on va obtenir un tableau de toutes les tâches d'un élément.
 var taskItem = serviceJob.getServicesByJobId(element.id, element);
-console.log("taskItem length : "+taskItem.length);
 
 // date Scale
 var dateAxisBuilder = require('./ui/dateAxis');
@@ -39,7 +36,7 @@ var dateAxis = dateAxisBuilder.dateAxis(dateScale);
 var button = d3.select("body").append("button").attr('class', 'btn btn-default').attr('data-action', 'reload').text("Reload");
 var buttonShift = d3.select("body").append("button").attr('class', 'btn btn-success').attr('data-action', 'shift').text("Shift");
 
-// création d'un gantt en svg
+// create an SVG gantt
 var gantt = d3.select("body").append("svg")
     .attr("width", config.svg.width)
     .attr("height", config.svg.height)
@@ -56,12 +53,42 @@ var taskAxis = taskAxisBuilder.taskAxis(taskScale);
     .attr("class", "y axis")
     .call(taskAxis);*/
 
-// création d'un date Axis
+// create a date axis
 var xAxisE1 = gantt.append("g")
     .attr("class", "x axis")
     .call(dateAxis);
 
+// get the name of every task item.
+var taskName = [];
+for(var i =0 ; i<taskItem.length;i++)
+{
+    taskName.push(taskItem[i].name);
+}
+var lines = gantt.append('g')
+                .attr("class", "y grid lines")
+                .selectAll('g.lines')
+                .data(taskName)
+                .enter()
+                .append('line')
+                .attr('x1', 0)
+                .attr('x2', config.svg.width-config.margin.right)
+                .attr("y1", function(d){return taskScale(d)+taskScale.rangeBand();})
+                .attr("y2", function(d){return taskScale(d)+taskScale.rangeBand();})
+                .attr("stroke-width",1)
+                .attr("stroke","black");
 
+var texts = gantt.append("g")
+                .attr("class", "label")
+                .selectAll("text")
+                .data(taskItem)
+                .enter()
+                .append("text")
+                .text(function(d){return d.name ;})
+                .attr("x", -0.05*config.margin.left)
+                .attr("y", function(d,i){return (i * taskScale.rangeBand() + 0.9 * taskScale.rangeBand());})   // the y location for the label is the width of the bands + offset
+                .attr("font-size", "15px")
+                .attr("text-anchor", "end")
+                .attr("fill","black");
 
 //var bars = require('./ui/bar');
 var bars = gantt.append("g")
@@ -71,18 +98,18 @@ var bars = gantt.append("g")
     .enter()
     .append("rect")
     .attr("x", function(d) {
-        return dateScale(d.tStartDate);
+        return dateScale(change.changeStringToDate(d.tStartDate));
     })
     .attr("y", function(d) {
         return taskScale(d.name) + 0.05 * taskScale.rangeBand();
     })
     .attr("width", function(d) {
-        return (dateScale(d.tEndDate) - dateScale(d.tStartDate));
+        return (dateScale(change.changeStringToDate(d.tEndDate)) - dateScale(change.changeStringToDate(d.tStartDate)));
     })
     .attr("height", taskScale.rangeBand()*0.9)
     .attr("fill", "orange")
     .on("mouseover", function(d){
-        var xPosition = dateScale(d.tEndDate);
+        var xPosition = dateScale(change.changeStringToDate(d.tEndDate));
         var yPosition = parseFloat(d3.select(this).attr("y")) + taskScale.rangeBand();
         d3.select('#tooltip')
         .style("left",xPosition +"px")
@@ -102,32 +129,6 @@ var bars = gantt.append("g")
         //hide the tooltip
         d3.select('#tooltip').classed("hidden",true);
     });
-
-var taskName = [taskItem[0].name, taskItem[1].name,taskItem[2].name,taskItem[3].name,taskItem[4].name];
-var lines = gantt.append('g')
-                .attr("class", "y grid lines")
-                .selectAll('g.lines')
-                .data(taskName)
-                .enter()
-                .append('line')
-                .attr('x1', 0)
-                .attr('x2', config.svg.width-config.margin.right)
-                .attr("y1", function(d){return taskScale(d)+taskScale.rangeBand();})
-                .attr("y2", function(d){return taskScale(d)+taskScale.rangeBand();})
-                .attr("stroke-width",1)
-                .attr("stroke","black");
-var texts = gantt.append("g")
-                .attr("class", "label")
-                .selectAll("text")
-                .data(taskItem)
-                .enter()
-                .append("text")
-                .text(function(d){return d.name ;})
-                .attr("x", -0.05*config.margin.left)
-                .attr("y", function(d,i){return (i * taskScale.rangeBand() + 0.9 * taskScale.rangeBand());})   // the y location for the label is the width of the bands + offset
-                .attr("font-size", "15px")
-                .attr("text-anchor", "end")
-                .attr("fill","black");
 
 
 var services = require('./services/shiftDate');

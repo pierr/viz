@@ -1,5 +1,4 @@
 function dataRequest(){
-	console.log("bbbbbbb");
 	var element;
 	var dataLoader =
 	{
