@@ -6,8 +6,8 @@ var dateUtil = require('./util/dateUtil');
 //var gen = require('./data/dataLoader');
 //var element = gen.generate(5);
 
-/*
-//load the static data
+
+/*//load the static data
 var element = require('./data/dataLoaderStatic');
 */
 
@@ -33,7 +33,6 @@ var dateScale = dateAxisBuilder.dateScale(dateUtil);
 var dateAxis = dateAxisBuilder.dateAxis(dateScale);
 
 //Boutons.
-var button = d3.select("body").append("button").attr('class', 'btn btn-default').attr('data-action', 'reload').text("Reload");
 var buttonShift = d3.select("body").append("button").attr('class', 'btn btn-success').attr('data-action', 'shift').text("Shift");
 
 // create an SVG gantt
@@ -71,11 +70,11 @@ var lines = gantt.append('g')
                 .enter()
                 .append('line')
                 .attr('x1', 0)
-                .attr('x2', config.svg.width-config.margin.right)
+                .attr('x2', config.svg.width-config.margin.right - config.margin.left)
                 .attr("y1", function(d){return taskScale(d)+taskScale.rangeBand();})
                 .attr("y2", function(d){return taskScale(d)+taskScale.rangeBand();})
                 .attr("stroke-width",1)
-                .attr("stroke","black");
+                .attr("stroke","#A8A8A8");
 
 var texts = gantt.append("g")
                 .attr("class", "label")
@@ -90,6 +89,45 @@ var texts = gantt.append("g")
                 .attr("text-anchor", "end")
                 .attr("fill","black");
 
+
+
+
+    // drag operation
+    var drag = d3.behavior.drag()
+            /*.origin(function(d) {
+                return {
+                    x:dateScale(change.changeStringToDate(d.tStartDate)),
+                    y:taskScale(d.name) + 0.05 * taskScale.rangeBand()
+                };
+            })*/
+            .origin(function()
+            {
+                var t = d3.select(this);
+                return { x: t.attr('x'),
+                         y: t.attr('y')
+                       };
+            })
+            .on("dragstart", dragStart)
+            .on("drag", dragMove)
+            .on("dragend", dragEnd);
+    function dragStart(d)
+    {
+        console.log("step 1");
+        d3.event.sourceEvent.stopPropagation();
+        d3.select(this)
+            .attr("fill", "#F7DFC7");
+    }
+    function dragMove(d) {
+        console.log("step 2");
+        console.log("test :" + d3.event.dx);
+        d3.select(this)
+        .attr("x", function(d) { return d3.mouse(this);});}
+    function dragEnd(d)
+    {
+        console.log("step 3");
+        d3.select(this)
+            .attr("fill", "orange");
+    }
 //var bars = require('./ui/bar');
 var bars = gantt.append("g")
     .attr("class", "bar")
@@ -128,13 +166,34 @@ var bars = gantt.append("g")
     .on("mouseout",function(){
         //hide the tooltip
         d3.select('#tooltip').classed("hidden",true);
-    });
+    })
+    .call(drag);
 
 
+// update the JSON element
+// shift
+// delete
+// add
 var services = require('./services/shiftDate');
 d3.select('button[data-action="shift"]').on('click', function(event) {
-    // advance or pushed back 5 days
-    var newElement = services.shiftDate(element, 5);
+    /*// advance or pushed back 5 days
+    var newElement = services.shiftDate(element, 5);*/
+    // send an Ajax request to change the data
+    /*$.ajax(){
+        url: 'http://localhost:7777/job',
+        type:'  POST',
+        dataType: 'JSON',
+        cache: false,
+        timeOut: 1000,
+        async:false,                     // here is a synchronous request.
+        success: function(data)
+        {
+            element = data;
+        },
+        error: function(){
+            alert("error!");
+        }
+    };*/
     gantt.selectAll("rect").data(newElement.tasks)
         .attr("x", function(d) {
             return dateScale(d.tStartDate);

@@ -45,7 +45,7 @@ var config = require('../config');
 function dateScale(dateUtil) {
 	var xDateScale = d3.time.scale()
 		.domain([dateUtil.firstMonthDay, dateUtil.nextMonthDay])
-		.rangeRound([0, config.svg.width - config.margin.left - config.margin.right]);
+		.range([0, config.svg.width - config.margin.left - config.margin.right]);
 	return xDateScale;
 }
 
